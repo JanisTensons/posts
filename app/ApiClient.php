@@ -26,14 +26,13 @@ class ApiClient
     {
         try {
             if (!Cache::has('articles-all')) {
-                $url = 'https://jsonplaceholder.typicode.com/posts';
-                $response = $this->client->request('GET', $url);
-                $responseJson = $response->getBody()->getContents();
-                Cache::remember('articles-all', $responseJson);
+                $articlesUrl = 'https://jsonplaceholder.typicode.com/posts';
+                $articlesJson = $this->client->request('GET', $articlesUrl)->getBody()->getContents();
+                Cache::remember('articles-all', $articlesJson);
             } else {
-                $responseJson = Cache::get('articles-all');
+                $articlesJson = Cache::get('articles-all');
             }
-            $articlesContents = json_decode($responseJson);
+            $articlesContents = json_decode($articlesJson);
 
             foreach ($articlesContents as $article) {
                 $userId = $article->userId;
@@ -46,7 +45,7 @@ class ApiClient
                 } else {
                     $userJson = Cache::get($userCacheKey);
                 }
-                $user = json_decode($userJson);
+                $userContents = json_decode($userJson);
 
                 $articleId = $article->id;
                 $commentsUrl = "https://jsonplaceholder.typicode.com/comments?postId=$articleId";
@@ -58,12 +57,12 @@ class ApiClient
                 } else {
                     $commentsJson = Cache::get($commentsCacheKey);
                 }
-                $comments = json_decode($commentsJson);
+                $commentsContents = json_decode($commentsJson);
 
                 $commentsCollection = new CommentsCollection();
                 $userArticles = [];
 
-                foreach ($comments as $comment) {
+                foreach ($commentsContents as $comment) {
                     $commentsCollection->add(new Comment(
                         $comment->postId,
                         $comment->id,
@@ -77,7 +76,13 @@ class ApiClient
                     $article->title,
                     $article->body,
                     $article->userId,
-                    new User($user->id, $user->name, $user->username, $user->email, $userArticles),
+                    new User(
+                        $userContents->id,
+                        $userContents->name,
+                        $userContents->username,
+                        $userContents->email,
+                        $userArticles
+                    ),
                     $commentsCollection
                 ));
             }
@@ -92,19 +97,17 @@ class ApiClient
     {
         try {
             if (!Cache::has('users-all')) {
-                $url = 'https://jsonplaceholder.typicode.com/users';
-                $response = $this->client->request('GET', $url);
-                $responseJson = $response->getBody()->getContents();
-                Cache::remember('users-all', $responseJson);
+                $usersUrl = 'https://jsonplaceholder.typicode.com/users';
+                $usersJson = $this->client->request('GET', $usersUrl)->getBody()->getContents();
+                Cache::remember('users-all', $usersJson);
             } else {
-                $responseJson = Cache::get('users-all');
+                $usersJson = Cache::get('users-all');
             }
-            $usersContents = json_decode($responseJson);
+            $usersContents = json_decode($usersJson);
 
             $articlesUrl = 'https://jsonplaceholder.typicode.com/posts';
-            $articlesResponse = $this->client->request('GET', $articlesUrl);
-            $articlesResponseJson = $articlesResponse->getBody()->getContents();
-            $articlesContents = json_decode($articlesResponseJson);
+            $articlesJson = $this->client->request('GET', $articlesUrl)->getBody()->getContents();
+            $articlesContents = json_decode($articlesJson);
 
             $usersCollection = new UsersCollection();
             $commentsCollection = new CommentsCollection();

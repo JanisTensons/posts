@@ -99,23 +99,24 @@
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {{ user.getName() }}</h5>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">username: {{ user.getUsername() }}</p>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Email: {{ user.getEmail() }}</p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">email: {{ user.getEmail() }}</p>
             <h3>Articles [{{ user.getUserArticles()|length }}]:</h3>
             <ul>
                 {% for article in user.getUserArticles() %}
-                    <a href="article?id={{ article.getId() }}">
-                        <div class="relative overflow-x-auto">
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                <thead class="text-xs text-gray-700 border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col"
+                                    class="px-6 py-3 text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-500">
+                                    <a href="article?id={{ article.getId() }}">
                                         <h4>{{ article.getTitle() }}</h4>
-                                    </th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </a>
+                                    </a>
+                                </th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
                 {% endfor %}
             </ul>
         </div>
