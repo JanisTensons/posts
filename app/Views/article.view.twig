@@ -100,7 +100,7 @@
                 <input type="hidden" name="id" value="{{ article.getUser().getId() }}">
                 <button type="submit"
                         class="text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-500">
-                    Author: {{ article.getUser().getUsername() }}
+                    Author: {{ article.getUser().getName() }}
                 </button>
             </form>
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ article.getTitle() }}</h5>
