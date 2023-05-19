@@ -2,18 +2,12 @@
 
 namespace App\Controllers;
 
-use App\ApiClient;
 use App\Exceptions\ResourceNotFoundException;
 use App\Services\Article\IndexArticleService;
 use App\Services\Article\Show\ShowArticleRequest;
 use App\Services\Article\Show\ShowArticleResponse;
 use App\Services\Article\Show\ShowArticleService;
-use App\Services\User\Show\ShowUserRequest;
-use App\Services\User\Show\ShowUserResponse;
-use App\Services\User\Show\ShowUserService;
 use App\View;
-use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Component\Translation\Exception\RuntimeException;
 
 class ArticleController
 {
@@ -25,8 +19,6 @@ class ArticleController
     public function index(): ?View
     {
         try {
-            //       $apiClient = new ApiClient();
-            //       $articlesCollection = $apiClient->getArticleContents();
             $service = new IndexArticleService();
             $articlesCollection = $service->execute();
             return new View('articles', ['articles' => $articlesCollection->getCollection()]);
@@ -38,8 +30,6 @@ class ArticleController
     public function show(): ?View
     {
         try {
-            //      $apiClient = new ApiClient();
-            //      $articlesCollection = $apiClient->getArticleContents();
             $articleId = $_GET["id"] - 1;
             $service = new ShowArticleService();
             $request = $service->execute(new ShowArticleRequest($articleId));

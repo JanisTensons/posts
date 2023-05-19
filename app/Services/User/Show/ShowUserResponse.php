@@ -8,6 +8,7 @@ class ShowUserResponse
 {
     private User $user;
     private array $articles;
+
     public function __construct(User $user, array $articles)
     {
         $this->user = $user;

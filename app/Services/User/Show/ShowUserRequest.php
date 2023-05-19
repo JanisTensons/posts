@@ -5,6 +5,7 @@ namespace App\Services\User\Show;
 class ShowUserRequest
 {
     private int $userId;
+
     public function __construct(int $userId)
     {
         $this->userId = $userId;
@@ -14,5 +15,4 @@ class ShowUserRequest
     {
         return $this->userId;
     }
-
 }

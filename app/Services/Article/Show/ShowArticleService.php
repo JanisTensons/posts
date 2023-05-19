@@ -18,11 +18,9 @@ class ShowArticleService
     {
         $article = $this->client->getArticleContents()->getCollection()[$request->getArticleId()];
 
-        //    if($user == null){
-        //        throw new ResourceNotFoundException('User by id '.$request->getUserId().' not found');
-        //    }
-
-
+        if ($article == null) {
+            throw new ResourceNotFoundException("Article by ID {$request->getArticleId()} not found!");
+        }
         return new ShowArticleResponse($article);
     }
 }

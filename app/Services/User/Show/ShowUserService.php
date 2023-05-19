@@ -13,15 +13,15 @@ class ShowUserService
     {
         $this->client = new ApiClient();
     }
+
     public function execute(ShowUserRequest $request): ShowUserResponse
     {
         $users = $this->client->getUserContents()->getCollection();
         $userId = $request->getUserId();
 
-   //    if (!isset($users[$userId])) {
-    //        throw new ResourceNotFoundException('User by ID ' . $userId . ' not found');
-    //    }
-
+        if ($users[$userId] == null) {
+            throw new ResourceNotFoundException("User by ID $userId not found!");
+        }
         $user = $users[$userId];
         $articles = $user->getUserArticles();
 

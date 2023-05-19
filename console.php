@@ -24,8 +24,8 @@ switch ($resource) {
             $service = new IndexArticleService();
             $articles = $service->execute();
 
-            echo "\n---------ARTICLES----------\n";
-            foreach ($articles as $article) {
+            echo "\n---------ARTICLES----------\n\n";
+            foreach ($articles->getCollection() as $article) {
                 /** @var Article $article */
                 echo " Author: {$article->getUserId()}" . PHP_EOL;
                 echo " Title: {$article->getTitle()}" . PHP_EOL;
@@ -41,7 +41,7 @@ switch ($resource) {
             $request = new ShowArticleRequest($id);
             $article = $service->execute($request);
 
-            echo "\n----------ARTICLE----------\n";
+            echo "\n----------ARTICLE----------\n\n";
             echo " Author: {$article->getArticleUserId()}" . PHP_EOL;
             echo " Title: {$article->getArticle()->getTitle()}" . PHP_EOL;
             echo " Body: {$article->getArticle()->getBody()}" . PHP_EOL;
@@ -66,7 +66,7 @@ switch ($resource) {
 
                 if ($user != null) {
 
-                    echo "\n----------USER----------\n";
+                    echo "\n----------ARTICLE AUTHOR----------\n\n";
                     echo " Name: {$user->getUser()->getName()}" . PHP_EOL;
                     echo " username: {$user->getUser()->getUsername()}" . PHP_EOL;
                     echo " email: {$user->getUser()->getEmail()}" . PHP_EOL;
@@ -90,8 +90,8 @@ switch ($resource) {
             $service = new IndexUserService();
             $users = $service->execute();
 
-            echo "\n---------USERS----------\n";
-            foreach ($users as $user) {
+            echo "\n---------USERS----------\n\n";
+            foreach ($users->getCollection() as $user) {
                 /** @var User $user */
                 echo " Name: {$user->getName()}" . PHP_EOL;
                 echo " username: {$user->getUsername()}" . PHP_EOL;
@@ -107,7 +107,7 @@ switch ($resource) {
             $request = new ShowUserRequest($id);
             $user = $service->execute($request);
 
-            echo "\n----------USER----------\n";
+            echo "\n----------USER----------\n\n";
             echo " Name: {$user->getUser()->getName()}" . PHP_EOL;
             echo " username: {$user->getUser()->getUsername()}" . PHP_EOL;
             echo " email: {$user->getUser()->getEmail()}" . PHP_EOL;

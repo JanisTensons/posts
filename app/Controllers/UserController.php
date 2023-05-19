@@ -2,9 +2,7 @@
 
 namespace App\Controllers;
 
-use App\ApiClient;
 use App\Exceptions\ResourceNotFoundException;
-use App\Services\Article\IndexArticleService;
 use App\Services\User\IndexUserService;
 use App\Services\User\Show\ShowUserRequest;
 use App\Services\User\Show\ShowUserResponse;
@@ -16,8 +14,6 @@ class UserController
     public function index(): ?View
     {
         try {
-            //       $apiClient = new ApiClient();
-            //       $articlesCollection = $apiClient->getArticleContents();
             $service = new IndexUserService();
             $usersCollection = $service->execute();
             return new View('users', ['users' => $usersCollection->getCollection()]);
@@ -29,8 +25,6 @@ class UserController
     public function show(): ?View
     {
         try {
-            //       $apiClient = new ApiClient();
-            //       $userCollection = $apiClient->getUserContents();
             $userId = $_GET["id"] - 1;
             $service = new ShowUserService();
             $request = $service->execute(new ShowUserRequest($userId));

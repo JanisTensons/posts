@@ -2,12 +2,8 @@
 
 namespace App\Services\User;
 
-use App\Exceptions\ResourceNotFoundException;
 use App\ApiClient;
-use App\Models\ArticlesCollection;
 use App\Models\UsersCollection;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 
 class IndexUserService
 {
@@ -17,6 +13,7 @@ class IndexUserService
     {
         $this->client = new ApiClient();
     }
+
     public function execute(): UsersCollection
     {
         return $this->client->getUserContents();

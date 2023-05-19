@@ -12,7 +12,6 @@ class Router
             $r->addRoute('GET', '/article', 'App\Controllers\ArticleController@show');
             $r->addRoute('GET', '/user', 'App\Controllers\UserController@show');
             $r->addRoute('GET', '/users', 'App\Controllers\UserController@index');
-
         });
 
 // Fetch method and URI from somewhere
