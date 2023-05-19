@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Article</title>
+    <title>All Users</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
@@ -52,26 +52,11 @@
             background-color: #ddd;
         }
 
-        .card-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .card {
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 20px;
-        }
-
     </style>
 </head>
 <body>
 <header class="header">
-    <h1>Article</h1>
+    <h1>All Users</h1>
 </header>
 
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
@@ -97,46 +82,25 @@
     </div>
 </nav>
 
-<div class="card-container">
-    <div class="card max-w-lg max-w-xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <img class="rounded-t-lg" src="https://placehold.co/600x400" alt=""/>
-        <div class="p-5">
-            <form action="user" method="GET">
-                <input type="hidden" name="id" value="{{ article.getUser().getId() }}">
-                <button type="submit"
-                        class="text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-500">
-                    Author: {{ article.getUser().getName() }}
-                </button>
-            </form>
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ article.getTitle() }}</h5>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ article.getBody() }}</p>
-            <p>Comments [{{ article.getComments().getCollection()|length }}]:</p>
-
-            {% for comment in article.getComments().getCollection() %}
-                <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                <p>
-                                    <span class="font-bold">Name:</span>
-                                    <span class="font-normal">{{ comment.getName() }}</span>
-                                </p>
-                                <p>
-                                    <span class="font-bold">Email:</span>
-                                    <span class="font-normal">{{ comment.getEmail() }}</span>
-                                </p>
-                                <p class="font-normal">{{ comment.getBody() }}</p>
-                            </th>
-                        </tr>
-                        </thead>
-                    </table>
+<div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+    {% for user in users %}
+        <a href="user?id={{ user.getId() }}">
+            <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <div>
+                    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+                         src="https://placehold.co/150x150" alt="{{ user.getName() }}"></div>
+                <div>
+                    <h5 class="ml-5 text-lg font-bold">{{ user.getName() }}</h5>
+                    <p class="ml-5 font-normal text-sm text-gray-700 dark:text-gray-400">
+                        <strong>username:</strong> {{ user.getUsername() }}</p>
+                    <p class="ml-5 font-normal text-sm text-gray-700 dark:text-gray-400">
+                        <strong>email:</strong> {{ user.getEmail() }}</p>
                 </div>
-            {% endfor %}
-
-        </div>
-    </div>
+            </div>
+        </a>
+    {% endfor %}
 </div>
+
 </body>
 <footer>
 </footer>

@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class Cache
 {
-    public static function remember(string $key, string $content, int $ttl = 60): void
+    public static function remember(string $key, string $content, int $ttl = 120): void
     {
         $cacheFile = 'cache/' . $key;
 

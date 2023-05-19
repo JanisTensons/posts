@@ -3,33 +3,50 @@
 namespace App\Controllers;
 
 use App\ApiClient;
+use App\Exceptions\ResourceNotFoundException;
+use App\Services\Article\IndexArticleService;
+use App\Services\Article\Show\ShowArticleRequest;
+use App\Services\Article\Show\ShowArticleResponse;
+use App\Services\Article\Show\ShowArticleService;
+use App\Services\User\Show\ShowUserRequest;
+use App\Services\User\Show\ShowUserResponse;
+use App\Services\User\Show\ShowUserService;
 use App\View;
+use GuzzleHttp\Exception\GuzzleException;
+use Symfony\Component\Translation\Exception\RuntimeException;
 
 class ArticleController
 {
-    public function getIndex(): View
+    public function home(): View
     {
         return new View('index', ['articles' => null]);
     }
 
-    public function getArticlesContents(): View
+    public function index(): ?View
     {
-        $apiClient = new ApiClient();
-        $articleCollection = $apiClient->getArticleContents();
-        return new View('articles', ['articles' => $articleCollection->getCollection()]);
+        try {
+            //       $apiClient = new ApiClient();
+            //       $articlesCollection = $apiClient->getArticleContents();
+            $service = new IndexArticleService();
+            $articlesCollection = $service->execute();
+            return new View('articles', ['articles' => $articlesCollection->getCollection()]);
+        } catch (ResourceNotFoundException $exception) {
+            return null;
+        }
     }
 
-    public function getArticleContents(): View
+    public function show(): ?View
     {
-        $apiClient = new ApiClient();
-        $articleCollection = $apiClient->getArticleContents();
-        return new View('article', ['article' => $articleCollection->getCollection()[$_GET["id"] - 1]]);
-    }
-
-    public function getUserContents(): View
-    {
-        $apiClient = new ApiClient();
-        $userCollection = $apiClient->getUserContents();
-        return new View('user', ['user' => $userCollection->getCollection()[$_GET["id"] - 1]]);
+        try {
+            //      $apiClient = new ApiClient();
+            //      $articlesCollection = $apiClient->getArticleContents();
+            $articleId = $_GET["id"] - 1;
+            $service = new ShowArticleService();
+            $request = $service->execute(new ShowArticleRequest($articleId));
+            $response = new ShowArticleResponse($request->getArticle());
+            return new View('article', ['article' => $response->getArticle()]);
+        } catch (ResourceNotFoundException $exception) {
+            return null;
+        }
     }
 }

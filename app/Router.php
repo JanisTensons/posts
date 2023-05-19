@@ -7,10 +7,12 @@ class Router
     public static function response(): ?View
     {
         $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', 'App\Controllers\ArticleController@getIndex');
-            $r->addRoute('GET', '/articles', 'App\Controllers\ArticleController@getArticlesContents');
-            $r->addRoute('GET', '/article', 'App\Controllers\ArticleController@getArticleContents');
-            $r->addRoute('GET', '/user', 'App\Controllers\ArticleController@getUserContents');
+            $r->addRoute('GET', '/', 'App\Controllers\ArticleController@home');
+            $r->addRoute('GET', '/articles', 'App\Controllers\ArticleController@index');
+            $r->addRoute('GET', '/article', 'App\Controllers\ArticleController@show');
+            $r->addRoute('GET', '/user', 'App\Controllers\UserController@show');
+            $r->addRoute('GET', '/users', 'App\Controllers\UserController@index');
+
         });
 
 // Fetch method and URI from somewhere
