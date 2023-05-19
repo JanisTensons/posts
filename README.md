@@ -1,6 +1,6 @@
 # The Articles
 
-![preview](https://github.com/JanisTensons/posts/assets/124044988/1d677e77-cb40-4aee-b00b-351bcd711ed9)
+![preview](https://github.com/JanisTensons/posts/assets/124044988/49146b2a-d555-4660-aee6-4432a09facac)
 
 #### How to install
 
