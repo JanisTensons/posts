@@ -2,20 +2,21 @@
 
 namespace App\Services\User;
 
-use App\ApiClient;
 use App\Models\UsersCollection;
+use App\Repositories\User\JsonPlaceholderUserRepository;
+use App\Repositories\User\UserRepository;
 
 class IndexUserService
 {
-    private ApiClient $client;
+    private UserRepository $userRepository;
 
     public function __construct()
     {
-        $this->client = new ApiClient();
+        $this->userRepository = new JsonPlaceholderUserRepository();
     }
 
     public function execute(): UsersCollection
     {
-        return $this->client->getUserContents();
+        return $this->userRepository->all();
     }
 }

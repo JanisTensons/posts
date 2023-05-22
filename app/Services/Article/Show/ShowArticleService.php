@@ -2,21 +2,22 @@
 
 namespace App\Services\Article\Show;
 
-use App\ApiClient;
 use App\Exceptions\ResourceNotFoundException;
+use App\Repositories\Article\ArticleRepository;
+use App\Repositories\Article\JsonPlaceholderArticleRepository;
 
 class ShowArticleService
 {
-    private ApiClient $client;
+    private ArticleRepository $articleRepository;
 
     public function __construct()
     {
-        $this->client = new ApiClient();
+        $this->articleRepository = new JsonPlaceholderArticleRepository();
     }
 
     public function execute(ShowArticleRequest $request): ShowArticleResponse
     {
-        $article = $this->client->getArticleContents()->getCollection()[$request->getArticleId()];
+        $article = $this->articleRepository->all()->getCollection()[$request->getArticleId()];
 
         if ($article == null) {
             throw new ResourceNotFoundException("Article by ID {$request->getArticleId()} not found!");
