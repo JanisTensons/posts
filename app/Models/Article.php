@@ -9,7 +9,7 @@ class Article
     private string $body;
     private int $userId;
     private User $user;
-    private CommentsCollection $comments;
+    private ?CommentsCollection $comments;
 
     public function __construct(
         int $id,
@@ -17,7 +17,7 @@ class Article
         string $body,
         int $userId,
         User $user,
-        CommentsCollection $comments
+        ?CommentsCollection $comments
     )
     {
         $this->id = $id;
@@ -53,7 +53,7 @@ class Article
         return $this->user;
     }
 
-    public function getComments(): CommentsCollection
+    public function getComments(): ?CommentsCollection
     {
         return $this->comments;
     }

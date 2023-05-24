@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Repositories\Article\ArticleRepository;
-use App\Repositories\Article\JsonPlaceholderArticleRepository;
+use App\Repositories\Article\PdoArticleRepository;
 use App\Repositories\User\JsonPlaceholderUserRepository;
 use App\Repositories\User\UserRepository;
 use DI\ContainerBuilder;
@@ -14,7 +14,7 @@ class Router
     {
         $builder = new ContainerBuilder();
         $builder->addDefinitions([
-            ArticleRepository::class => new JsonPlaceholderArticleRepository(),
+            ArticleRepository::class => new PdoArticleRepository(),
             UserRepository::class => new JsonPlaceholderUserRepository(),
         ]);
         $container = $builder->build();
