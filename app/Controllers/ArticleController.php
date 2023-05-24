@@ -11,6 +11,15 @@ use App\View;
 
 class ArticleController
 {
+    private IndexArticleService $indexArticleService;
+    private ShowArticleService $showArticleService;
+
+    public function __construct(IndexArticleService $indexArticleService, ShowArticleService $showArticleService)
+    {
+        $this->indexArticleService = $indexArticleService;
+        $this->showArticleService = $showArticleService;
+    }
+
     public function home(): View
     {
         return new View('index', ['articles' => null]);
@@ -19,7 +28,7 @@ class ArticleController
     public function index(): ?View
     {
         try {
-            $service = new IndexArticleService();
+            $service = $this->indexArticleService;
             $articlesCollection = $service->execute();
             return new View('articles', ['articles' => $articlesCollection->getCollection()]);
         } catch (ResourceNotFoundException $exception) {
@@ -31,7 +40,7 @@ class ArticleController
     {
         try {
             $articleId = $_GET["id"] - 1;
-            $service = new ShowArticleService();
+            $service = $this->showArticleService;
             $request = $service->execute(new ShowArticleRequest($articleId));
             $response = new ShowArticleResponse($request->getArticle());
             return new View('article', ['article' => $response->getArticle()]);

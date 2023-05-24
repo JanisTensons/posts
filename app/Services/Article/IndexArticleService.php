@@ -4,15 +4,14 @@ namespace App\Services\Article;
 
 use App\Models\ArticlesCollection;
 use App\Repositories\Article\ArticleRepository;
-use App\Repositories\Article\JsonPlaceholderArticleRepository;
 
 class IndexArticleService
 {
     private ArticleRepository $articleRepository;
 
-    public function __construct()
+    public function __construct(ArticleRepository $articleRepository)
     {
-        $this->articleRepository = new JsonPlaceholderArticleRepository();
+        $this->articleRepository = $articleRepository;
     }
 
     public function execute(): ArticlesCollection

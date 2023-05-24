@@ -11,10 +11,19 @@ use App\View;
 
 class UserController
 {
+    private IndexUserService $indexUserService;
+    private ShowUserService $showUserService;
+
+    public function __construct(IndexUserService $indexUserService, ShowUserService $showUserService)
+    {
+        $this->indexUserService = $indexUserService;
+        $this->showUserService = $showUserService;
+    }
+
     public function index(): ?View
     {
         try {
-            $service = new IndexUserService();
+            $service = $this->indexUserService;
             $usersCollection = $service->execute();
             return new View('users', ['users' => $usersCollection->getCollection()]);
         } catch (ResourceNotFoundException $exception) {
@@ -26,7 +35,7 @@ class UserController
     {
         try {
             $userId = $_GET["id"] - 1;
-            $service = new ShowUserService();
+            $service = $this->showUserService;
             $request = $service->execute(new ShowUserRequest($userId));
             $response = new ShowUserResponse($request->getUser(), $request->getArticles());
             return new View('user',

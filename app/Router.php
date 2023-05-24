@@ -2,10 +2,23 @@
 
 namespace App;
 
+use App\Repositories\Article\ArticleRepository;
+use App\Repositories\Article\JsonPlaceholderArticleRepository;
+use App\Repositories\User\JsonPlaceholderUserRepository;
+use App\Repositories\User\UserRepository;
+use DI\ContainerBuilder;
+
 class Router
 {
     public static function response(): ?View
     {
+        $builder = new ContainerBuilder();
+        $builder->addDefinitions([
+            ArticleRepository::class => new JsonPlaceholderArticleRepository(),
+            UserRepository::class => new JsonPlaceholderUserRepository(),
+        ]);
+        $container = $builder->build();
+
         $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/', 'App\Controllers\ArticleController@home');
             $r->addRoute('GET', '/articles', 'App\Controllers\ArticleController@index');
@@ -40,10 +53,9 @@ class Router
                 $vars = $routeInfo[2];
 
                 [$controllerName, $methodName] = explode('@', $handler);
-                $controller = new $controllerName;
+                $controller = $container->get($controllerName);
                 /** @var View $response */
-                $response = $controller->{$methodName}();
-                return $response;
+                return $controller->{$methodName}();
         }
         return null;
     }
